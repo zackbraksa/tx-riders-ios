@@ -17,7 +17,7 @@
     BIDMapPoint* pinDepart;
 }
 
-- (void) fetchChaffeurs;
+- (void) fetchchauffeurs;
 - (void) fetchReservation;
 - (IBAction)reserverAction:(id)sender;
 - (IBAction)annulerReservationAction:(id)sender;
@@ -25,7 +25,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *boutonReserver;
 @property (weak, nonatomic) IBOutlet UIButton *boutonAnnuler;
 @property (weak, nonatomic) IBOutlet MKMapView *worldMap;
-@property (retain, nonatomic) NSMutableData *chaffeursData;
+@property (retain, nonatomic) NSMutableData *chauffeursData;
 @property (retain, nonatomic) NSURLConnection *connection;
 
 

@@ -45,15 +45,11 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
     self.worldMap.delegate = self;
-    
     locationManager = [[CLLocationManager alloc] init];
     [locationManager setDelegate:self];
-    
     [locationManager setDistanceFilter:kCLDistanceFilterNone];
     [locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
-    
     [self.worldMap setShowsUserLocation:YES];
     
     
@@ -86,15 +82,15 @@
     [super viewWillAppear:animated];
 }
 
-- (void) fetchChaffeurs{
-    /* init connection  - request positions chaffeurs */
+- (void) fetchchauffeurs{
+    /* init connection  - request positions chauffeurs */
     
-    NSLog(@"req sent: getChaffeurs");
+    NSLog(@"req sent: getChauffeurs");
         
     NSMutableData *data = [[NSMutableData alloc] init];
-    self.chaffeursData = data;
+    self.chauffeursData = data;
     
-    NSURL *url = [NSURL URLWithString:@"http://test.braksa.com/tx/index.php/api/example/chaffeurs/format/json"];
+    NSURL *url = [NSURL URLWithString:@"http://test.braksa.com/tx/index.php/api/example/chauffeurs/format/json"];
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     
@@ -112,7 +108,7 @@
     NSLog(@"req sent: getReservation");
     
     NSMutableData *data = [[NSMutableData alloc] init];
-    self.chaffeursData = data;
+    self.chauffeursData = data;
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *user_id = [defaults objectForKey:@"user_id"];
@@ -136,7 +132,7 @@
     
     
     NSDictionary* json = [NSJSONSerialization
-                     JSONObjectWithData:self.chaffeursData
+                     JSONObjectWithData:self.chauffeursData
                      options:kNilOptions
                      error:nil];
     
@@ -155,18 +151,18 @@
                 NSNumber* latitude = [[json objectForKey:@"reservation"] objectForKey:@"latitude"];
                 NSNumber* longitude = [[json objectForKey:@"reservation"] objectForKey:@"longitude"];
                 
+                NSLog(@"");
+                
                 MKCoordinateRegion mapRegion;
                 CLLocationCoordinate2D newCoord = { [latitude floatValue], [longitude floatValue] };
                 mapRegion.center = newCoord;
                 mapRegion.span.latitudeDelta = 0.0019;
                 mapRegion.span.longitudeDelta = 0.0019;
                 BIDMapPoint *mp = [[BIDMapPoint alloc] initWithCoordinate:newCoord title:[NSString stringWithFormat:@"Adresse de départ"] subTitle:@"Adresse de départ"];
-                
                 pinDepart = mp;
-                
                 [self.worldMap addAnnotation:mp];
-                
                 [self.worldMap setRegion:mapRegion animated: YES];
+                
             }else{
                 
             }
@@ -178,23 +174,25 @@
             mapRegion.center = self.worldMap.userLocation.coordinate;
             mapRegion.span.latitudeDelta = 0.2;
             mapRegion.span.longitudeDelta = 0.2;
-            
+            if(pinDepart){
+                [self.worldMap removeAnnotation:pinDepart];
+            }
             [self.worldMap setRegion:mapRegion animated: YES];
             
             
         }
         
-        [self fetchChaffeurs];
+        [self fetchchauffeurs];
         
     }
-    else if([[json objectForKey:@"action"] isEqualToString:@"getChaffeurs"]){
+    else if([[json objectForKey:@"action"] isEqualToString:@"getChauffeurs"]){
         
-        NSLog(@"Chaffeurs fetched : %@", [json objectForKey:@"status"]);
+        NSLog(@"chauffeurs fetched : %@", [json objectForKey:@"status"]);
         if([[json objectForKey:@"status"] isEqualToString:@"done"]){
-            for(int i=0;i<[[json objectForKey:@"chaffeurs"] count]; i++){
+            for(int i=0;i<[[json objectForKey:@"chauffeurs"] count]; i++){
                 
-                CGFloat latDelta = [[[[json objectForKey:@"chaffeurs"] objectAtIndex:i] objectForKey:@"latitude"] floatValue];
-                CGFloat longDelta = [[[[json objectForKey:@"chaffeurs"] objectAtIndex:i] objectForKey:@"longitude"] floatValue];
+                CGFloat latDelta = [[[[json objectForKey:@"chauffeurs"] objectAtIndex:i] objectForKey:@"latitude"] floatValue];
+                CGFloat longDelta = [[[[json objectForKey:@"chauffeurs"] objectAtIndex:i] objectForKey:@"longitude"] floatValue];
                 
                 CLLocationCoordinate2D newCoord = { latDelta, longDelta };
                 
@@ -204,6 +202,7 @@
             }
         }
         else{
+            NSLog(@"Error getting chauffeurs.");
         }
     }
     else if([[json objectForKey:@"action"] isEqualToString:@"cancelReservation"]){
@@ -224,6 +223,8 @@
         
         [self.worldMap setRegion:mapRegion animated: YES];
         
+    }else{
+        NSLog(@"Creepy error. %@", json);
     }
     
     
@@ -232,7 +233,7 @@
 
 
 -(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data{
-    [self.chaffeursData appendData:data];
+    [self.chauffeursData appendData:data];
 }
 
 
@@ -325,7 +326,7 @@
     if([title isEqualToString:@"Oui"])
     {
         NSMutableData *data = [[NSMutableData alloc] init];
-        self.chaffeursData = data;
+        self.chauffeursData = data;
         
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSString *user_id = [defaults objectForKey:@"reservation_id"];

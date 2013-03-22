@@ -6,6 +6,8 @@
 #import "BIDAppDelegate.h"
 #import "BIDViewController.h"
 #import "BIDHomeViewController.h"
+#import <Parse/Parse.h>
+
 
 @implementation BIDAppDelegate
 
@@ -14,7 +16,13 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
+    //[Parse setApplicationId:@"SZC8VUU9Sv5yu8GndXgV5U1u2EmtMf0zvXnQtuaP"
+                  //clientKey:@"AhNGJl4iwsk6bw5J8IixQc94sDdGPKmO12UF8cmk"];
+    //[PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
+    [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge|
+                        UIRemoteNotificationTypeAlert|
+                        UIRemoteNotificationTypeSound];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *user_id = [defaults objectForKey:@"user_id"];
@@ -42,6 +50,32 @@
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+}
+
+- (void)application:(UIApplication *)application
+didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    // Store the deviceToken in the current installation and save it to Parse.
+    //PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    //[currentInstallation setDeviceTokenFromData:deviceToken];
+    //[currentInstallation saveInBackground];
+    NSLog(@"My token is: %@", deviceToken);
+
+}
+
+/*- (void)application:(UIApplication *)application
+didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    NSLog(@"Got it");
+}*/
+
+- (void)application:(UIApplication *)application
+didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{
+    if ([error code] == 3010) {
+        NSLog(@"Push notifications don't work in the simulator!");
+    } else {
+        NSLog(@"didFailToRegisterForRemoteNotificationsWithError: %@", error);
+    }
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application

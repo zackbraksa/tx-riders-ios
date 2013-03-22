@@ -106,7 +106,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     self.navigationItem.rightBarButtonItem = nextButton;
 }
 
--(void)clickNext{
+- (IBAction)clickNext:(id)sender{
     NSLog(@"Next");
     
     //if there is a connection going on just cancel it.
@@ -191,7 +191,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     
     if([[json objectForKey:@"status"] isEqualToString:@"done"])
     {
-        [[self navigationController] popToRootViewControllerAnimated:YES];
+        [self dismissModalViewControllerAnimated:YES];
         
     }else{
         UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Erreur Inscription!"
@@ -210,4 +210,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)goBackAction:(id)sender {
+    [self dismissModalViewControllerAnimated:YES];
+}
 @end

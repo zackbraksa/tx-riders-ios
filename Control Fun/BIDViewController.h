@@ -4,7 +4,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "BIDTabBarViewController.h"
 
 @interface BIDViewController : UIViewController <UIActionSheetDelegate>{
     UIActivityIndicatorView *activityIndicator;

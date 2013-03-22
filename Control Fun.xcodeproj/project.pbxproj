@@ -20,13 +20,12 @@
 		23C5C6D315D3933100803F1A /* apress_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 23C5C6D215D3933100803F1A /* apress_logo.png */; };
 		9227741116F57D1A00B52408 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 9227741016F57D1900B52408 /* star.png */; };
 		9227741316F57F3E00B52408 /* cog.png in Resources */ = {isa = PBXBuildFile; fileRef = 9227741216F57F3E00B52408 /* cog.png */; };
+		92849C7416FAC2C200E97233 /* BIDProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92849C7216FAC2C200E97233 /* BIDProfileViewController.m */; };
+		92849C7516FAC2C200E97233 /* BIDProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92849C7316FAC2C200E97233 /* BIDProfileViewController.xib */; };
 		92B8406F16E7BC5C0074F5DD /* BIDHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B8406D16E7BC5C0074F5DD /* BIDHomeViewController.m */; };
 		92B8407016E7BC5C0074F5DD /* BIDHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92B8406E16E7BC5C0074F5DD /* BIDHomeViewController.xib */; };
-		92B8407416E7BC6A0074F5DD /* BIDFavoritesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B8407216E7BC6A0074F5DD /* BIDFavoritesViewController.m */; };
-		92B8407516E7BC6A0074F5DD /* BIDFavoritesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92B8407316E7BC6A0074F5DD /* BIDFavoritesViewController.xib */; };
 		92B8407916E7BC740074F5DD /* BIDMoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B8407716E7BC740074F5DD /* BIDMoreViewController.m */; };
 		92B8407A16E7BC740074F5DD /* BIDMoreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92B8407816E7BC740074F5DD /* BIDMoreViewController.xib */; };
-		92B840C516E7C2E00074F5DD /* BIDTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B840C316E7C2E00074F5DD /* BIDTabBarViewController.m */; };
 		92B840CF16E7D34B0074F5DD /* cog_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 92B840CC16E7D34B0074F5DD /* cog_01.png */; };
 		92B840D016E7D34B0074F5DD /* globe.png in Resources */ = {isa = PBXBuildFile; fileRef = 92B840CD16E7D34B0074F5DD /* globe.png */; };
 		92B840D116E7D34B0074F5DD /* house.png in Resources */ = {isa = PBXBuildFile; fileRef = 92B840CE16E7D34B0074F5DD /* house.png */; };
@@ -37,7 +36,6 @@
 		92B840EF16E831B00074F5DD /* ego_bg_iphone4.png in Resources */ = {isa = PBXBuildFile; fileRef = 92B840EE16E831B00074F5DD /* ego_bg_iphone4.png */; };
 		92DF090B16E8DEC00088CD3E /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 92DF090A16E8DEBF0088CD3E /* background.png */; };
 		92DF090E16E8E5720088CD3E /* background2.png in Resources */ = {isa = PBXBuildFile; fileRef = 92DF090D16E8E5720088CD3E /* background2.png */; };
-		92DF091116E8ED300088CD3E /* BIDNavBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92DF091016E8ED300088CD3E /* BIDNavBarViewController.m */; };
 		92DF091516E8F3770088CD3E /* BIDReserverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92DF091316E8F3770088CD3E /* BIDReserverViewController.m */; };
 		92DF091616E8F3770088CD3E /* BIDReserverViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92DF091416E8F3770088CD3E /* BIDReserverViewController.xib */; };
 		92DF091816E90A910088CD3E /* grayButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 92DF091716E90A910088CD3E /* grayButton.png */; };
@@ -71,17 +69,15 @@
 		23C5C6D215D3933100803F1A /* apress_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = apress_logo.png; sourceTree = "<group>"; };
 		9227741016F57D1900B52408 /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
 		9227741216F57F3E00B52408 /* cog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cog.png; sourceTree = "<group>"; };
+		92849C7116FAC2C200E97233 /* BIDProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BIDProfileViewController.h; sourceTree = "<group>"; };
+		92849C7216FAC2C200E97233 /* BIDProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BIDProfileViewController.m; sourceTree = "<group>"; };
+		92849C7316FAC2C200E97233 /* BIDProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BIDProfileViewController.xib; sourceTree = "<group>"; };
 		92B8406C16E7BC5C0074F5DD /* BIDHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BIDHomeViewController.h; sourceTree = "<group>"; };
 		92B8406D16E7BC5C0074F5DD /* BIDHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BIDHomeViewController.m; sourceTree = "<group>"; };
 		92B8406E16E7BC5C0074F5DD /* BIDHomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BIDHomeViewController.xib; sourceTree = "<group>"; };
-		92B8407116E7BC6A0074F5DD /* BIDFavoritesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BIDFavoritesViewController.h; sourceTree = "<group>"; };
-		92B8407216E7BC6A0074F5DD /* BIDFavoritesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BIDFavoritesViewController.m; sourceTree = "<group>"; };
-		92B8407316E7BC6A0074F5DD /* BIDFavoritesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BIDFavoritesViewController.xib; sourceTree = "<group>"; };
 		92B8407616E7BC740074F5DD /* BIDMoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BIDMoreViewController.h; sourceTree = "<group>"; };
 		92B8407716E7BC740074F5DD /* BIDMoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BIDMoreViewController.m; sourceTree = "<group>"; };
 		92B8407816E7BC740074F5DD /* BIDMoreViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BIDMoreViewController.xib; sourceTree = "<group>"; };
-		92B840C216E7C2E00074F5DD /* BIDTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BIDTabBarViewController.h; sourceTree = "<group>"; };
-		92B840C316E7C2E00074F5DD /* BIDTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BIDTabBarViewController.m; sourceTree = "<group>"; };
 		92B840CC16E7D34B0074F5DD /* cog_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cog_01.png; sourceTree = "<group>"; };
 		92B840CD16E7D34B0074F5DD /* globe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = globe.png; sourceTree = "<group>"; };
 		92B840CE16E7D34B0074F5DD /* house.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = house.png; sourceTree = "<group>"; };
@@ -93,8 +89,6 @@
 		92B840EE16E831B00074F5DD /* ego_bg_iphone4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ego_bg_iphone4.png; sourceTree = "<group>"; };
 		92DF090A16E8DEBF0088CD3E /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		92DF090D16E8E5720088CD3E /* background2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = background2.png; path = "Control Fun/background2.png"; sourceTree = "<group>"; };
-		92DF090F16E8ED300088CD3E /* BIDNavBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BIDNavBarViewController.h; sourceTree = "<group>"; };
-		92DF091016E8ED300088CD3E /* BIDNavBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BIDNavBarViewController.m; sourceTree = "<group>"; };
 		92DF091216E8F3770088CD3E /* BIDReserverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BIDReserverViewController.h; sourceTree = "<group>"; };
 		92DF091316E8F3770088CD3E /* BIDReserverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BIDReserverViewController.m; sourceTree = "<group>"; };
 		92DF091416E8F3770088CD3E /* BIDReserverViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BIDReserverViewController.xib; sourceTree = "<group>"; };
@@ -184,8 +178,6 @@
 				23C5C6C715D3924700803F1A /* BIDViewController.h */,
 				23C5C6C815D3924700803F1A /* BIDViewController.m */,
 				23C5C6CA15D3924700803F1A /* BIDViewController.xib */,
-				92B840C216E7C2E00074F5DD /* BIDTabBarViewController.h */,
-				92B840C316E7C2E00074F5DD /* BIDTabBarViewController.m */,
 				92DF091D16E928DF0088CD3E /* BIDSigninViewController.h */,
 				92DF091E16E928DF0088CD3E /* BIDSigninViewController.m */,
 				92DF091F16E928DF0088CD3E /* BIDSigninViewController.xib */,
@@ -195,11 +187,9 @@
 				92B8406C16E7BC5C0074F5DD /* BIDHomeViewController.h */,
 				92B8406D16E7BC5C0074F5DD /* BIDHomeViewController.m */,
 				92B8406E16E7BC5C0074F5DD /* BIDHomeViewController.xib */,
-				92DF090F16E8ED300088CD3E /* BIDNavBarViewController.h */,
-				92DF091016E8ED300088CD3E /* BIDNavBarViewController.m */,
-				92B8407116E7BC6A0074F5DD /* BIDFavoritesViewController.h */,
-				92B8407216E7BC6A0074F5DD /* BIDFavoritesViewController.m */,
-				92B8407316E7BC6A0074F5DD /* BIDFavoritesViewController.xib */,
+				92849C7116FAC2C200E97233 /* BIDProfileViewController.h */,
+				92849C7216FAC2C200E97233 /* BIDProfileViewController.m */,
+				92849C7316FAC2C200E97233 /* BIDProfileViewController.xib */,
 				92B8407616E7BC740074F5DD /* BIDMoreViewController.h */,
 				92B8407716E7BC740074F5DD /* BIDMoreViewController.m */,
 				92B8407816E7BC740074F5DD /* BIDMoreViewController.xib */,
@@ -284,7 +274,6 @@
 				92E8815A16E4F33F008A8436 /* taxi.png in Resources */,
 				92E8815C16E4F344008A8436 /* taxi@2X.png in Resources */,
 				92B8407016E7BC5C0074F5DD /* BIDHomeViewController.xib in Resources */,
-				92B8407516E7BC6A0074F5DD /* BIDFavoritesViewController.xib in Resources */,
 				92B8407A16E7BC740074F5DD /* BIDMoreViewController.xib in Resources */,
 				92B840CF16E7D34B0074F5DD /* cog_01.png in Resources */,
 				92B840D016E7D34B0074F5DD /* globe.png in Resources */,
@@ -301,6 +290,7 @@
 				92DF092316E941EC0088CD3E /* blackButton.png in Resources */,
 				9227741116F57D1A00B52408 /* star.png in Resources */,
 				9227741316F57F3E00B52408 /* cog.png in Resources */,
+				92849C7516FAC2C200E97233 /* BIDProfileViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -316,13 +306,11 @@
 				23C5C6C915D3924700803F1A /* BIDViewController.m in Sources */,
 				92E8815816E4E96D008A8436 /* SSKeychain.m in Sources */,
 				92B8406F16E7BC5C0074F5DD /* BIDHomeViewController.m in Sources */,
-				92B8407416E7BC6A0074F5DD /* BIDFavoritesViewController.m in Sources */,
 				92B8407916E7BC740074F5DD /* BIDMoreViewController.m in Sources */,
-				92B840C516E7C2E00074F5DD /* BIDTabBarViewController.m in Sources */,
 				92B840E816E7DEAD0074F5DD /* BIDMapPoint.m in Sources */,
-				92DF091116E8ED300088CD3E /* BIDNavBarViewController.m in Sources */,
 				92DF091516E8F3770088CD3E /* BIDReserverViewController.m in Sources */,
 				92DF092016E928DF0088CD3E /* BIDSigninViewController.m in Sources */,
+				92849C7416FAC2C200E97233 /* BIDProfileViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -398,12 +386,15 @@
 		23C5C6D015D3924700803F1A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zakaria Braksa (K74P43MX72)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Control Fun/Control Fun-Prefix.pch";
 				INFOPLIST_FILE = "Control Fun/Control Fun-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "507EAD0C-F00F-4851-9466-BAB24EE5B04B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -412,12 +403,15 @@
 		23C5C6D115D3924700803F1A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zakaria Braksa (K74P43MX72)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Control Fun/Control Fun-Prefix.pch";
 				INFOPLIST_FILE = "Control Fun/Control Fun-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "507EAD0C-F00F-4851-9466-BAB24EE5B04B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

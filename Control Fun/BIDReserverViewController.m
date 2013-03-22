@@ -29,13 +29,11 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    UIBarButtonItem *nextButton = [[UIBarButtonItem alloc] initWithTitle:@"Suivant" style:UIBarButtonItemStyleDone target:self action:@selector(clickNext)];
-    self.navigationItem.rightBarButtonItem = nextButton;
 }
 
--(void)clickNext{
-    NSLog(@"Next");
+- (IBAction)clickNext:(id)sender{
     
+    NSLog(@"Next");
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *user_id = [defaults objectForKey:@"user_id"];
     
@@ -125,8 +123,7 @@
         
         NSLog(@"statut: %@",[defaults objectForKey:@"statut_reservation"]);
         
-        [[self navigationController] popToRootViewControllerAnimated:NO];
-        
+        [self dismissModalViewControllerAnimated:YES];
     }else{
         UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Erreur Reservation!"
                                                           message:@"Votre adresse départ n'est pas valide."
@@ -149,6 +146,10 @@
     [self.departField resignFirstResponder];
 }
 
+
+- (IBAction)goBackAction:(id)sender {
+    [self dismissModalViewControllerAnimated:YES];
+}
 
 - (IBAction)valueChanged:(UIStepper*)sender {
     if([sender tag] == 0){

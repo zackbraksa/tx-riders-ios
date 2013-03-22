@@ -21,7 +21,9 @@
 @property (weak, nonatomic) IBOutlet UITextField *emailField;
 @property (retain, nonatomic) NSMutableData *receivedData;
 
--(void)clickNext;
+- (IBAction)clickNext:(id)sender;
+- (IBAction)goBackAction:(id)sender;
+
 - (IBAction)textFieldDoneEditing:(id)sender;
 
 

@@ -1,18 +1,18 @@
 //
-//  BIDNavBarViewController.m
+//  BIDProfileViewController.m
 //  Control Fun
 //
-//  Created by Zakaria on 3/7/13.
+//  Created by Zakaria on 3/21/13.
 //  Copyright (c) 2013 Apress. All rights reserved.
 //
 
-#import "BIDNavBarViewController.h"
+#import "BIDProfileViewController.h"
 
-@interface BIDNavBarViewController ()
+@interface BIDProfileViewController ()
 
 @end
 
-@implementation BIDNavBarViewController
+@implementation BIDProfileViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -26,7 +26,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+    // Do any additional setup after loading the view from its nib.
 }
 
 - (void)didReceiveMemoryWarning
@@ -35,4 +35,7 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)goBackAction:(id)sender {
+    [self dismissModalViewControllerAnimated:YES];
+}
 @end

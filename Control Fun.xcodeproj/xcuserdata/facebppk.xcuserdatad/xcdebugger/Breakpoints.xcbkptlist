@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Control Fun/BIDViewController.h"
-         timestampString = "385170459.778931"
+         timestampString = "385533069.764429"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "17"
-         endingLineNumber = "17"
+         startingLineNumber = "16"
+         endingLineNumber = "16"
          landmarkName = "@interface BIDViewController"
          landmarkType = "2">
       </FileBreakpoint>
@@ -21,13 +21,26 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Control Fun/BIDTabBarViewController.m"
-         timestampString = "385174106.585732"
+         timestampString = "385529725.243074"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "18"
-         endingLineNumber = "18"
+         startingLineNumber = "17"
+         endingLineNumber = "17"
          landmarkName = "@implementation BIDTabBarViewController"
          landmarkType = "3">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Control Fun/BIDReserverViewController.m"
+         timestampString = "385523969.898022"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "21"
+         endingLineNumber = "21"
+         landmarkName = "-initWithNibName:bundle:"
+         landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
 </Bucket>

@@ -18,15 +18,19 @@
 }
 
 - (void) fetchchauffeurs;
-- (void) fetchReservation;
+- (IBAction)fetchReservation;
 - (IBAction)reserverAction:(id)sender;
 - (IBAction)annulerReservationAction:(id)sender;
+- (IBAction)bringProfileAction:(id)sender;
+- (IBAction)bringConfigAction:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UIButton *boutonReserver;
 @property (weak, nonatomic) IBOutlet UIButton *boutonAnnuler;
 @property (weak, nonatomic) IBOutlet MKMapView *worldMap;
 @property (retain, nonatomic) NSMutableData *chauffeursData;
 @property (retain, nonatomic) NSURLConnection *connection;
+@property (weak, nonatomic) IBOutlet UILabel *redTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *blackTitleLabel;
 
 
 

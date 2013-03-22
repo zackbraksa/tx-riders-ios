@@ -48,10 +48,14 @@
     BIDViewController *loginView = [[BIDViewController alloc] initWithNibName:@"BIDViewController" bundle:nil];
     UIViewController *loginNavigationControllerView = [[UINavigationController alloc] initWithRootViewController:loginView];
     
-    ((UINavigationController*)loginNavigationControllerView).navigationBar.tintColor = [UIColor blackColor];
+    //((UINavigationController*)loginNavigationControllerView).navigationBar.tintColor = [UIColor blackColor];
     
     UIWindow *window = [[UIApplication sharedApplication] keyWindow];
     window.rootViewController = loginNavigationControllerView;
         
+}
+
+- (IBAction)goBackAction:(id)sender {
+    [self dismissModalViewControllerAnimated:YES];
 }
 @end

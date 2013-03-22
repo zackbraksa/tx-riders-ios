@@ -9,6 +9,8 @@
 #import "BIDHomeViewController.h"
 #import "BIDReserverViewController.h"
 #import "BIDMapPoint.h"
+#import "BIDProfileViewController.h"
+#import "BIDMoreViewController.h"
 #import <QuartzCore/QuartzCore.h>
 
 
@@ -22,18 +24,17 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        UIBarButtonItem *button = [[UIBarButtonItem alloc]
+        /*UIBarButtonItem *button = [[UIBarButtonItem alloc]
                                    initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
                                    target:self
                                    action:@selector(fetchReservation)];
         self.navigationItem.rightBarButtonItem = button;
 
-        /* change tab item title */
         
         UITabBarItem* tbi = [self tabBarItem];
         [tbi setTitle:@"Carte"];
         UIImage* i = [UIImage imageNamed:@"globe.png"];
-        [tbi setImage:i];
+        [tbi setImage:i];*/
     
     }
     return self;
@@ -102,8 +103,7 @@
 }
 
 
-- (void) fetchReservation{
-    
+- (IBAction)fetchReservation{
     
     NSLog(@"req sent: getReservation");
     
@@ -144,7 +144,10 @@
             if([[[json objectForKey:@"reservation"] objectForKey:@"status"] isEqualToString:@"pending"]){
                 [self.boutonAnnuler setHidden:NO];
                 [self.boutonReserver setHidden:YES];
-                [self navigationController].navigationBar.topItem.title = @"Confirmation en cours";
+                //[self navigationController].navigationBar.topItem.title = @"Confirmation en cours";
+                self.blackTitleLabel.text = @"Confirmation en cours";
+                self.redTitleLabel.text = @"Vous allez recevoir une notification dans un moment.";
+                
                 NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                 [defaults setObject:[[json objectForKey:@"reservation"] objectForKey:@"id"] forKey:@"reservation_id"];
                 
@@ -169,7 +172,9 @@
         }else{
             [self.boutonAnnuler setHidden:YES];
             [self.boutonReserver setHidden:NO];
-            [self navigationController].navigationBar.topItem.title = @"Carte des taxis";
+            //[self navigationController].navigationBar.topItem.title = @"Carte des taxis";
+            self.redTitleLabel.text = @"Bon à savoir";
+            self.blackTitleLabel.text = @"Prenez un taxi dans 5 min.";
             MKCoordinateRegion mapRegion;
             mapRegion.center = self.worldMap.userLocation.coordinate;
             mapRegion.span.latitudeDelta = 0.2;
@@ -209,7 +214,9 @@
         
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [defaults removeObjectForKey:@"statut_reservation"];
-        [self navigationController].navigationBar.topItem.title = @"Résérvation annulé";
+        //[self navigationController].navigationBar.topItem.title = @"Résérvation annulé";
+        self.blackTitleLabel.text = @"Résérvation annulé";
+        self.redTitleLabel.text = @"";
         
         [self.boutonReserver setHidden:NO];
         [self.boutonAnnuler setHidden:YES];
@@ -299,11 +306,12 @@
 }
 
 - (IBAction)reserverAction:(id)sender {
-    UIViewController *secondView = [[BIDReserverViewController alloc]
+    UIViewController *reserverView = [[BIDReserverViewController alloc]
                                     initWithNibName:@"BIDReserverViewController"
                                     bundle:nil];
     
-    [[self navigationController] pushViewController:secondView animated:YES];
+    [self presentModalViewController:reserverView animated:YES];
+    
 }
 
 - (IBAction)annulerReservationAction:(id)sender {
@@ -318,6 +326,16 @@
     
     
 
+}
+
+- (IBAction)bringProfileAction:(id)sender {
+    BIDProfileViewController *profileView = [[BIDProfileViewController alloc] initWithNibName:@"BIDProfileViewController" bundle:nil];
+    [self presentModalViewController:profileView animated:YES];
+}
+
+- (IBAction)bringConfigAction:(id)sender {
+    BIDMoreViewController *configView = [[BIDMoreViewController alloc] initWithNibName:@"BIDMoreViewController" bundle:nil];
+    [self presentModalViewController:configView animated:YES];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
@@ -350,4 +368,9 @@
     
 }
 
+- (void)viewDidUnload {
+    [self setRedTitleLabel:nil];
+    [self setBlackTitleLabel:nil];
+    [super viewDidUnload];
+}
 @end

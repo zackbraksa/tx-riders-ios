@@ -1,6 +1,7 @@
 
 
 #import "BIDViewController.h"
+#import "BIDHomeViewController.h"
 #import "SSKeychain.h"
 #import "BIDSigninViewController.h"
 #import <QuartzCore/QuartzCore.h>
@@ -31,9 +32,11 @@
 }
 
 - (IBAction)creerCompteAction:(id)sender {
-    BIDSigninViewController *SigninView = [[BIDSigninViewController alloc] initWithNibName:@"BIDSigninViewController" bundle:nil];
-    
-    [[self navigationController] pushViewController:SigninView animated:YES];
+    BIDSigninViewController *SignUpView = [[BIDSigninViewController alloc] initWithNibName:@"BIDSigninViewController" bundle:nil];
+    [SignUpView setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+    //[SignUpView setModalTransitionStyle:UIModalTransitionStylePartialCurl]; //curl
+
+    [self presentModalViewController:SignUpView animated:YES];
 }
 
 - (IBAction)textFieldDoneEditing:(id)sender {
@@ -136,9 +139,10 @@
         [defaults setObject:[json objectForKey:@"user_id"] forKey:@"user_id"];
         
         
-        BIDTabBarViewController *another = [[BIDTabBarViewController alloc] initWithNibName:@"BIDTabBarViewController" bundle:nil];
+        //BIDTabBarViewController *another = [[BIDTabBarViewController alloc] initWithNibName:@"BIDTabBarViewController" bundle:nil];
+        BIDHomeViewController* homeView = [[BIDHomeViewController alloc] initWithNibName:@"BIDHomeViewController" bundle:nil];
         UIWindow *window = [[UIApplication sharedApplication] keyWindow];
-        window.rootViewController = another;
+        window.rootViewController = homeView;
          
         
     }else{

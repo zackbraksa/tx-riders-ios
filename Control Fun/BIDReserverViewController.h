@@ -17,9 +17,10 @@
 @property (retain, nonatomic) NSMutableData *receivedData;
 
 
+- (IBAction)goBackAction:(id)sender;
 - (IBAction)valueChanged:(UIStepper*)sender;
 - (IBAction)textFieldDoneEditing:(id)sender;
-- (void)clickNext;
+- (IBAction)clickNext:(id)sender;
 
 
 

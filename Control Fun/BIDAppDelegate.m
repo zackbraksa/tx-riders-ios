@@ -5,6 +5,7 @@
 
 #import "BIDAppDelegate.h"
 #import "BIDViewController.h"
+#import "BIDHomeViewController.h"
 
 @implementation BIDAppDelegate
 
@@ -21,13 +22,14 @@
     
     if(user_id == NULL){
         
-        //self.viewController = [[BIDViewController alloc] initWithNibName:@"BIDViewController" bundle:nil];
-        BIDViewController *fistView = [[BIDViewController alloc] initWithNibName:@"BIDViewController" bundle:nil];
+        self.viewController = [[BIDViewController alloc] initWithNibName:@"BIDViewController" bundle:nil];
+        /*BIDViewController *fistView = [[BIDViewController alloc] initWithNibName:@"BIDViewController" bundle:nil];
         self.viewController = [[UINavigationController alloc] initWithRootViewController:fistView];
-        ((UINavigationController*)self.viewController).navigationBar.tintColor = [UIColor blackColor];
+        ((UINavigationController*)self.viewController).navigationBar.tintColor = [UIColor blackColor];*/
         
     }else{
-        self.viewController = [[BIDTabBarViewController alloc] initWithNibName:@"BIDTabBarViewController" bundle:nil];
+        //self.viewController = [[BIDTabBarViewController alloc] initWithNibName:@"BIDTabBarViewController" bundle:nil];
+        self.viewController = [[BIDHomeViewController alloc] initWithNibName:@"BIDHomeViewController" bundle:nil];
     }
     
     self.window.rootViewController = self.viewController;

@@ -10,5 +10,6 @@
 
 @interface BIDMoreViewController : UIViewController
 - (IBAction)disconnectAction:(id)sender;
+- (IBAction)goBackAction:(id)sender;
 
 @end

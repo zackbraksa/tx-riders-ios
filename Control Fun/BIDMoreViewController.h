@@ -8,7 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BIDMoreViewController : UIViewController
+@interface BIDMoreViewController : UIViewController{
+    UIActivityIndicatorView *activityIndicator;
+}
+
+
+@property (retain, nonatomic) NSURLConnection *connection;
+@property (retain, nonatomic) NSMutableData *receivedData;
+
 - (IBAction)disconnectAction:(id)sender;
 - (IBAction)goBackAction:(id)sender;
 

@@ -53,20 +53,25 @@
 }
 
 - (void)application:(UIApplication *)application
-didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)apnToken
 {
-    // Store the deviceToken in the current installation and save it to Parse.
-    //PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-    //[currentInstallation setDeviceTokenFromData:deviceToken];
-    //[currentInstallation saveInBackground];
-    NSLog(@"My token is: %@", deviceToken);
-
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString* apnString = [[NSString alloc] initWithData:apnToken encoding:NSUTF8StringEncoding];
+    NSString* old_apn = [apnString stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSString *apn = [old_apn substringWithRange:NSMakeRange(1, [old_apn length]-1)];
+    //NSLog(@"My token is: %@", apn);
+    [defaults setObject:apn forKey:@"apnToken"];
 }
 
-/*- (void)application:(UIApplication *)application
+- (void)application:(UIApplication *)application
 didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    NSLog(@"Got it");
-}*/
+    NSLog(@"Got a new notification");
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Confirmation" message:@"Votre taxi est en route!" delegate:self cancelButtonTitle:@"OK!" otherButtonTitles:nil, nil];
+    [message show];
+    notif = true;
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:@"accepted" forKey:@"status_reservation"];}
 
 - (void)application:(UIApplication *)application
 didFailToRegisterForRemoteNotificationsWithError:(NSError *)error

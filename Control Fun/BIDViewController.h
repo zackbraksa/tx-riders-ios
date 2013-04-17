@@ -10,9 +10,10 @@
 }
 
 @property (retain, nonatomic) NSURLConnection *connection;
+@property (retain, nonatomic) NSMutableData *receivedData;
 @property (weak, nonatomic) IBOutlet UITextField *loginField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
-@property (retain, nonatomic) NSMutableData *receivedData;
+
 
 
 - (IBAction)creerCompteAction:(id)sender;

@@ -24,17 +24,6 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        /*UIBarButtonItem *button = [[UIBarButtonItem alloc]
-                                   initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
-                                   target:self
-                                   action:@selector(fetchReservation)];
-        self.navigationItem.rightBarButtonItem = button;
-
-        
-        UITabBarItem* tbi = [self tabBarItem];
-        [tbi setTitle:@"Carte"];
-        UIImage* i = [UIImage imageNamed:@"globe.png"];
-        [tbi setImage:i];*/
     
     }
     return self;
@@ -63,6 +52,13 @@
     
     NSLog(@"status reservation: %@",statut);
     
+    //if action was accepted hide cancel button
+    if([statut isEqualToString:@"accepted"]){
+        [self.boutonAnnuler setHidden:YES];
+        self.redTitleLabel.text = @"Réservation acceptée";
+        self.blackTitleLabel.text = @"Votre taxi est en route";
+    }
+    
     /*if([statut isEqualToString:@"pending"]){
         [self.boutonAnnuler setHidden:NO];
         [self.boutonReserver setHidden:YES];
@@ -78,15 +74,17 @@
         [self.worldMap setRegion:mapRegion animated: YES];
     }*/
     
+    //fetch any current reservations
     [self fetchReservation];
     
+    //calling super
     [super viewWillAppear:animated];
 }
 
 - (void) fetchchauffeurs{
-    /* init connection  - request positions chauffeurs */
+    /* init connection  - request positions des chauffeurs */
     
-    NSLog(@"req sent: getChauffeurs");
+    NSLog(@"request: getChauffeurs");
         
     NSMutableData *data = [[NSMutableData alloc] init];
     self.chauffeursData = data;
@@ -105,7 +103,7 @@
 
 - (IBAction)fetchReservation{
     
-    NSLog(@"req sent: getReservation");
+    NSLog(@"request: getReservation");
     
     NSMutableData *data = [[NSMutableData alloc] init];
     self.chauffeursData = data;
@@ -138,7 +136,7 @@
     
     if([[json objectForKey:@"action"] isEqualToString:@"getReservation"]){
         
-        NSLog(@"Reservation fetched : %@", [json objectForKey:@"status"]);
+        NSLog(@"Reservations fetched: %@", [json objectForKey:@"status"]);
 
         if([[json objectForKey:@"status"] isEqualToString:@"done"]){
             if([[[json objectForKey:@"reservation"] objectForKey:@"status"] isEqualToString:@"pending"]){
@@ -242,14 +240,10 @@
 -(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data{
     [self.chauffeursData appendData:data];
 }
-
-
 -(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
     NSLog(@"%@" , error);
 }
-
-- (void)mapView:(MKMapView *)mv didAddAnnotationViews:(NSArray *)views
-{
+- (void)mapView:(MKMapView *)mv didAddAnnotationViews:(NSArray *)views{
 
     /*MKAnnotationView *annotationView = [views objectAtIndex:0];
     id<MKAnnotation> mp = [annotationView annotation];
@@ -257,25 +251,7 @@
     
     [mv setRegion:region animated:YES];*/
 }
-
-- (void)mapView:(MKMapView *)mv didUpdateUserLocation:(MKUserLocation *)userLocation
-{
-    //CLLocationCoordinate2D userCoordinate = userLocation.location.coordinate;
-    
-    /*
-    CGFloat latDelta = 49.8626696;
-    CGFloat longDelta = 2.3349731 ;
-    CLLocationCoordinate2D newCoord = { latDelta, longDelta };
-    BIDMapPoint *mp = [[BIDMapPoint alloc] initWithCoordinate:newCoord title:[NSString stringWithFormat:@"Taxi"] subTitle:@"Adresse de départ"];
-    [self.worldMap addAnnotation:mp];*/
-
-    
-}
-
-
-
-- (MKAnnotationView *)mapView:(MKMapView *)mv viewForAnnotation:(id <MKAnnotation>)annotation
-{
+- (MKAnnotationView *)mapView:(MKMapView *)mv viewForAnnotation:(id <MKAnnotation>)annotation{
     MKAnnotationView *pinView = nil;
     if(annotation != self.worldMap.userLocation && ![[annotation title] isEqualToString:@"Adresse de départ"])
     {
@@ -296,11 +272,7 @@
     return pinView;
     
 }
-
-
-
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
@@ -314,6 +286,8 @@
     
 }
 
+
+//prompt alertview when user want to cancel action
 - (IBAction)annulerReservationAction:(id)sender {
     
     UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Annuler résérvation!"
@@ -322,11 +296,8 @@
                                             cancelButtonTitle:@"Oui"
                                             otherButtonTitles:@"Non", nil];
     [message show];
-    
-    
-    
-
 }
+//--
 
 - (IBAction)bringProfileAction:(id)sender {
     BIDProfileViewController *profileView = [[BIDProfileViewController alloc] initWithNibName:@"BIDProfileViewController" bundle:nil];

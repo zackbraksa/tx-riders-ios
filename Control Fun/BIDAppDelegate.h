@@ -7,7 +7,9 @@
 
 @class BIDViewController;
 
-@interface BIDAppDelegate : UIResponder <UIApplicationDelegate>
+@interface BIDAppDelegate : UIResponder <UIApplicationDelegate>{
+    BOOL notif;
+}
 
 @property (strong, nonatomic) UIWindow *window;
 

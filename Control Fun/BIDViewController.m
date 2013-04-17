@@ -54,37 +54,30 @@
     NSLog(@"LOGIN");
     
     //check login/password using web service
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString* apn = [defaults objectForKey:@"apnToken"];
     
-    //if there is a connection going on just cancel it.
+    if(apn == NULL){
+        NSLog(@"Couldn't find APN Token");
+        NSString* apnString = @"<28b8d54c ac775b50 7d8a51c4 6424b1c1 2361cd15 3dfed444 2821d3e5 0a92ca77>";
+        NSString* old_apn = [apnString stringByReplacingOccurrencesOfString:@" " withString:@""];
+        apn = [old_apn substringWithRange:NSMakeRange(1, [old_apn length]-2)];
+    }
+    
+    NSLog(@"My APN token is: %@", apn);
+
+    
     [self.connection cancel];
+    self.receivedData = [[NSMutableData alloc] init];
     
-    //initialize new mutable data
-    NSMutableData *data = [[NSMutableData alloc] init];
-    self.receivedData = data;
-    
-    //initialize url that is going to be fetched.
     NSURL *url = [NSURL URLWithString:@"http://test.braksa.com/tx/index.php/api/example/login/format/json"];
-    
-    //initialize a request from url
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[url standardizedURL]];
-    
-    //set http method
     [request setHTTPMethod:@"POST"];
-    //initialize a post data
-    NSString *postData = [[NSString alloc] initWithFormat:@"email=%@&pwd=%@", [self.loginField text], [self.passwordField text]];
-    
-    //set request content type we MUST set this value.
-    
+    NSString *postData = [[NSString alloc] initWithFormat:@"email=%@&pwd=%@&apn=%@", [self.loginField text], [self.passwordField text], apn];
     [request setValue:@"application/x-www-form-urlencoded; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    
-    //set post data of request
     [request setHTTPBody:[postData dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    //initialize a connection from request
     NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
     self.connection = connection;
-    
-    //start the connection
     [connection start];
     
     
@@ -128,12 +121,11 @@
                           options:kNilOptions
                           error:nil];
     
-    NSLog(@"json: %@",json);
+    //NSLog(@"json: %@",json);
 
     
     if([[json objectForKey:@"status"] isEqualToString:@"done"])
     {
-        NSLog(@"user_id : %@",[json objectForKey:@"profil"]);
         //[SSKeychain setPassword:[self.passwordField text] forService:@"loginService" account:@"AnyUser"];
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [defaults setObject:[json objectForKey:@"user_id"] forKey:@"user_id"];

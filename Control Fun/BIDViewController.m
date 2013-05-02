@@ -13,25 +13,23 @@
 
 @implementation BIDViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad{
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
 }
-
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated{
     [self.navigationController setNavigationBarHidden:YES animated:animated];
     [super viewWillAppear:animated];
 }
-
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
 - (IBAction)creerCompteAction:(id)sender {
+    
+    //if the user click the "create new account" button
+    
     BIDSigninViewController *SignUpView = [[BIDSigninViewController alloc] initWithNibName:@"BIDSigninViewController" bundle:nil];
     [SignUpView setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
     //[SignUpView setModalTransitionStyle:UIModalTransitionStylePartialCurl]; //curl
@@ -42,7 +40,6 @@
 - (IBAction)textFieldDoneEditing:(id)sender {
     [sender resignFirstResponder];
 }
-
 - (IBAction)backgroundTap:(id)sender {
     [self.loginField resignFirstResponder];
     [self.passwordField resignFirstResponder];
@@ -53,7 +50,7 @@
     
     NSLog(@"LOGIN");
     
-    //check login/password using web service
+    //load the apn token from the hard drive 
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString* apn = [defaults objectForKey:@"apnToken"];
     
@@ -65,9 +62,11 @@
     }
     
     NSLog(@"My APN token is: %@", apn);
-
     
+    
+    //cancel if there is a connection 
     [self.connection cancel];
+    
     self.receivedData = [[NSMutableData alloc] init];
     
     NSURL *url = [NSURL URLWithString:@"http://test.braksa.com/tx/index.php/api/example/login/format/json"];
@@ -78,6 +77,7 @@
     [request setHTTPBody:[postData dataUsingEncoding:NSUTF8StringEncoding]];
     NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
     self.connection = connection;
+    //fire the connection and wait 
     [connection start];
     
     
@@ -95,8 +95,6 @@
 -(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data{
     [self.receivedData appendData:data];
 }
-
-
 -(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
     
      [activityIndicator stopAnimating];
@@ -116,28 +114,35 @@
     
     [activityIndicator stopAnimating];
     
+    //parse the reponse (json) 
     NSDictionary* json = [NSJSONSerialization
                           JSONObjectWithData:self.receivedData
                           options:kNilOptions
                           error:nil];
     
-    //NSLog(@"json: %@",json);
+    NSLog(@"json: %@",json);
 
     
     if([[json objectForKey:@"status"] isEqualToString:@"done"])
     {
+        // the authentication was successful 
+        
         //[SSKeychain setPassword:[self.passwordField text] forService:@"loginService" account:@"AnyUser"];
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [defaults setObject:[json objectForKey:@"user_id"] forKey:@"user_id"];
         
+        //store the user profile somewhere
+        [defaults setObject:[json objectForKey:@"profil"] forKey:@"user_profile"];
         
-        //BIDTabBarViewController *another = [[BIDTabBarViewController alloc] initWithNibName:@"BIDTabBarViewController" bundle:nil];
+        //switch the home view 
         BIDHomeViewController* homeView = [[BIDHomeViewController alloc] initWithNibName:@"BIDHomeViewController" bundle:nil];
         UIWindow *window = [[UIApplication sharedApplication] keyWindow];
         window.rootViewController = homeView;
          
         
     }else{
+        
+        //the authentication wasn't successful then show error message 
         UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Erreur authentification!"
                                                           message:@"Mauvaise combinaison Login/Mot de Passe."
                                                          delegate:nil

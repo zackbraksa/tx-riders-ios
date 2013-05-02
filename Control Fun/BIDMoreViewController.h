@@ -16,6 +16,9 @@
 @property (retain, nonatomic) NSURLConnection *connection;
 @property (retain, nonatomic) NSMutableData *receivedData;
 
+- (void) startAnimating;
+- (void) stopAnimating;
+
 - (IBAction)disconnectAction:(id)sender;
 - (IBAction)goBackAction:(id)sender;
 

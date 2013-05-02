@@ -34,7 +34,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
     self.worldMap.delegate = self;
     locationManager = [[CLLocationManager alloc] init];
     [locationManager setDelegate:self];
@@ -48,15 +47,19 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *statut = [defaults objectForKey:@"status_reservation"];
+    NSString *status = [defaults objectForKey:@"reservationStatus"];
     
-    NSLog(@"status reservation: %@",statut);
+    NSLog(@"Reservation status: %@",status);
     
-    //if action was accepted hide cancel button
-    if([statut isEqualToString:@"accepted"]){
+    //if the reservation was accepted by a taxi driver then show a slightly different view
+    if(status != NULL && [status isEqualToString:@"accepted"]){
         [self.boutonAnnuler setHidden:YES];
         self.redTitleLabel.text = @"Réservation acceptée";
         self.blackTitleLabel.text = @"Votre taxi est en route";
+        [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+    }else{
+        //try to find if there is any pending reservations
+        [self fetchReservation];
     }
     
     /*if([statut isEqualToString:@"pending"]){
@@ -70,36 +73,12 @@
         mapRegion.center = newCoord;
         mapRegion.span.latitudeDelta = 0.0019;
         mapRegion.span.longitudeDelta = 0.0019;
-        
         [self.worldMap setRegion:mapRegion animated: YES];
     }*/
     
-    //fetch any current reservations
-    [self fetchReservation];
-    
-    //calling super
     [super viewWillAppear:animated];
+    
 }
-
-- (void) fetchchauffeurs{
-    /* init connection  - request positions des chauffeurs */
-    
-    NSLog(@"request: getChauffeurs");
-        
-    NSMutableData *data = [[NSMutableData alloc] init];
-    self.chauffeursData = data;
-    
-    NSURL *url = [NSURL URLWithString:@"http://test.braksa.com/tx/index.php/api/example/chauffeurs/format/json"];
-    
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    
-    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-    self.connection = connection;
-    
-    //start connection
-    [connection start];
-}
-
 
 - (IBAction)fetchReservation{
     
@@ -125,6 +104,28 @@
     
 }
 
+- (void) fetchchauffeurs{
+    /* init connection  - request positions des chauffeurs */
+    
+    NSLog(@"request: getChauffeurs");
+        
+    NSMutableData *data = [[NSMutableData alloc] init];
+    self.chauffeursData = data;
+    
+    NSURL *url = [NSURL URLWithString:@"http://test.braksa.com/tx/index.php/api/example/chauffeurs/format/json"];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    
+    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    self.connection = connection;
+    
+    //start connection
+    [connection start];
+}
+
+
+
+
 
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection{
     
@@ -136,11 +137,15 @@
     
     if([[json objectForKey:@"action"] isEqualToString:@"getReservation"]){
         
-        NSLog(@"Reservations fetched: %@", [json objectForKey:@"status"]);
+        NSLog(@"Reservations fetched from server: %@", [json objectForKey:@"status"]);
 
         if([[json objectForKey:@"status"] isEqualToString:@"done"]){
+            
+            //if the server send back that there is a reservation pending for the current user
             if([[[json objectForKey:@"reservation"] objectForKey:@"status"] isEqualToString:@"pending"]){
-                [self.boutonAnnuler setHidden:NO];
+                
+                // we need to hide le bouton reserver and show le bouton annuler
+                [self.boutonAnnuler setHidden:NO]; 
                 [self.boutonReserver setHidden:YES];
                 //[self navigationController].navigationBar.topItem.title = @"Confirmation en cours";
                 self.blackTitleLabel.text = @"Confirmation en cours";
@@ -151,9 +156,7 @@
                 
                 NSNumber* latitude = [[json objectForKey:@"reservation"] objectForKey:@"latitude"];
                 NSNumber* longitude = [[json objectForKey:@"reservation"] objectForKey:@"longitude"];
-                
-                NSLog(@"");
-                
+                                
                 MKCoordinateRegion mapRegion;
                 CLLocationCoordinate2D newCoord = { [latitude floatValue], [longitude floatValue] };
                 mapRegion.center = newCoord;
@@ -164,15 +167,36 @@
                 [self.worldMap addAnnotation:mp];
                 [self.worldMap setRegion:mapRegion animated: YES];
                 
-            }else{
+            }else if([[[json objectForKey:@"reservation"] objectForKey:@"status"] isEqualToString:@"accepted"]){
+                
+                //if the server send back that the reservation was accepted by a taxi driver
+                [self.boutonAnnuler setHidden:YES];
+                [self.boutonReserver setHidden:YES];
+                self.blackTitleLabel.text = @"Votre taxi est en route";
+                self.redTitleLabel.text = @"Réservation acceptée";
+                
+                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                [defaults setObject:[[json objectForKey:@"reservation"] objectForKey:@"id"] forKey:@"reservation_id"];
+                
+                NSNumber* latitude = [[json objectForKey:@"reservation"] objectForKey:@"latitude"];
+                NSNumber* longitude = [[json objectForKey:@"reservation"] objectForKey:@"longitude"];
+                                
+                MKCoordinateRegion mapRegion;
+                CLLocationCoordinate2D newCoord = { [latitude floatValue], [longitude floatValue] };
+                mapRegion.center = newCoord;
+                mapRegion.span.latitudeDelta = 0.0019;
+                mapRegion.span.longitudeDelta = 0.0019;
+                BIDMapPoint *mp = [[BIDMapPoint alloc] initWithCoordinate:newCoord title:[NSString stringWithFormat:@"Adresse de départ"] subTitle:@"Adresse de départ"];
+                pinDepart = mp;
+                [self.worldMap addAnnotation:mp];
+                [self.worldMap setRegion:mapRegion animated: YES];
                 
             }
         }else{
             [self.boutonAnnuler setHidden:YES];
             [self.boutonReserver setHidden:NO];
-            //[self navigationController].navigationBar.topItem.title = @"Carte des taxis";
             self.redTitleLabel.text = @"Bon à savoir";
-            self.blackTitleLabel.text = @"Prenez un taxi dans 5 min.";
+            self.blackTitleLabel.text = @"Prenez un taxi en quelques minutes.";
             MKCoordinateRegion mapRegion;
             mapRegion.center = self.worldMap.userLocation.coordinate;
             mapRegion.span.latitudeDelta = 0.2;
@@ -182,16 +206,18 @@
             }
             [self.worldMap setRegion:mapRegion animated: YES];
             
-            
         }
         
+        
+        //try to fetch les chauffeurs 
         [self fetchchauffeurs];
         
-    }
-    else if([[json objectForKey:@"action"] isEqualToString:@"getChauffeurs"]){
+    }else if([[json objectForKey:@"action"] isEqualToString:@"getChauffeurs"]){
         
         NSLog(@"chauffeurs fetched : %@", [json objectForKey:@"status"]);
+        
         if([[json objectForKey:@"status"] isEqualToString:@"done"]){
+            
             for(int i=0;i<[[json objectForKey:@"chauffeurs"] count]; i++){
                 
                 CGFloat latDelta = [[[[json objectForKey:@"chauffeurs"] objectAtIndex:i] objectForKey:@"latitude"] floatValue];
@@ -203,16 +229,15 @@
                 
                 [self.worldMap addAnnotation:mp];
             }
-        }
-        else{
+            
+        }else{
             NSLog(@"Error getting chauffeurs.");
         }
-    }
-    else if([[json objectForKey:@"action"] isEqualToString:@"cancelReservation"]){
+        
+    }else if([[json objectForKey:@"action"] isEqualToString:@"cancelReservation"]){
         
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults removeObjectForKey:@"statut_reservation"];
-        //[self navigationController].navigationBar.topItem.title = @"Résérvation annulé";
+        [defaults setObject:@"done" forKey:@"reservationStatus"];
         self.blackTitleLabel.text = @"Résérvation annulé";
         self.redTitleLabel.text = @"";
         
@@ -229,7 +254,7 @@
         [self.worldMap setRegion:mapRegion animated: YES];
         
     }else{
-        NSLog(@"Creepy error. %@", json);
+        NSLog(@"Error canceling reservation. %@", json);
     }
     
     
@@ -251,6 +276,7 @@
     
     [mv setRegion:region animated:YES];*/
 }
+
 - (MKAnnotationView *)mapView:(MKMapView *)mv viewForAnnotation:(id <MKAnnotation>)annotation{
     MKAnnotationView *pinView = nil;
     if(annotation != self.worldMap.userLocation && ![[annotation title] isEqualToString:@"Adresse de départ"])
@@ -287,17 +313,7 @@
 }
 
 
-//prompt alertview when user want to cancel action
-- (IBAction)annulerReservationAction:(id)sender {
-    
-    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Annuler résérvation!"
-                                                      message:@"Est ce que vous êtes sûre de bien vouloir annuler cette résérvation ?"
-                                                     delegate:self
-                                            cancelButtonTitle:@"Oui"
-                                            otherButtonTitles:@"Non", nil];
-    [message show];
-}
-//--
+
 
 - (IBAction)bringProfileAction:(id)sender {
     BIDProfileViewController *profileView = [[BIDProfileViewController alloc] initWithNibName:@"BIDProfileViewController" bundle:nil];
@@ -309,7 +325,23 @@
     [self presentModalViewController:configView animated:YES];
 }
 
+//prompt alertview when user want to cancel action
+- (IBAction)annulerReservationAction:(id)sender {
+    
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Annuler résérvation!"
+                                                      message:@"Est ce que vous êtes sûre de bien vouloir annuler cette résérvation ?"
+                                                     delegate:self
+                                            cancelButtonTitle:@"Oui"
+                                            otherButtonTitles:@"Non", nil];
+    [message show];
+}
+//-- see next
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    
+    // when the user click cancel, he get an alertview telling him to confirm his choice
+    //this is where we check if he clicked Yes or No and based on that choice, either we cancel or not.
     
     NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
     if([title isEqualToString:@"Oui"])
@@ -334,7 +366,7 @@
     }
     else if([title isEqualToString:@"Non"])
     {
-        
+        //if user choose No, do nothing ! 
     }
     
 }

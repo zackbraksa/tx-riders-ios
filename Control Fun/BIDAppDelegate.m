@@ -70,8 +70,11 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
     [message show];
     notif = true;
     
+    //switch the app (views) to the mode when a taxi driver accepted the reservation
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:@"accepted" forKey:@"status_reservation"];}
+    [defaults setObject:@"accepted" forKey:@"reservationStatus"];
+
+}
 
 - (void)application:(UIApplication *)application
 didFailToRegisterForRemoteNotificationsWithError:(NSError *)error

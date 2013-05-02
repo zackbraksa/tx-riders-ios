@@ -43,10 +43,12 @@
 
 - (IBAction)disconnectAction:(id)sender {
     
-    
+    //get user_id from NSUserDefaults 
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *user_id = [defaults objectForKey:@"user_id"];
+    //--
     
+    //send a request to the server to remove this devide Push notification token from the db.
     [self.connection cancel];
     self.receivedData = [[NSMutableData alloc] init];
     NSURL *url = [NSURL URLWithString:@"http://test.braksa.com/tx/index.php/api/example/logout/format/json"];
@@ -58,14 +60,10 @@
     NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
     self.connection = connection;
     [connection start];
+    //--
     
     
-    activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    activityIndicator.layer.backgroundColor = [[UIColor colorWithWhite:0.0f alpha:0.5f] CGColor];
-    activityIndicator.hidesWhenStopped = YES;
-    activityIndicator.frame = self.view.bounds;
-    [self.view addSubview:activityIndicator];
-    [activityIndicator startAnimating];
+    [self startAnimating];
     
         
 }
@@ -73,13 +71,9 @@
 - (IBAction)goBackAction:(id)sender {
     [self dismissModalViewControllerAnimated:YES];
 }
-
-
 -(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data{
     [self.receivedData appendData:data];
 }
-
-
 -(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
     
     [activityIndicator stopAnimating];
@@ -107,10 +101,9 @@
     
     if([[json objectForKey:@"status"] isEqualToString:@"done"])
     {
-        [activityIndicator stopAnimating];
-
+        //when logout action was done with succes (APN token removed) 
+        [self stopAnimating];
         
-        //[SSKeychain deletePasswordForService:@"loginService" account:@"AnyUser"];
         NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
         [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
         
@@ -122,12 +115,24 @@
         
     }else{
         UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Erreur!"
-                                                          message:@"Vous n'êtes pas logged out."
+                                                          message:@"Vous n'êtes pas déconnecté."
                                                          delegate:nil
                                                 cancelButtonTitle:@"Réessayez"
                                                 otherButtonTitles:nil];
         [message show];
     }
+}
+
+- (void) startAnimating{
+    activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    activityIndicator.layer.backgroundColor = [[UIColor colorWithWhite:0.0f alpha:0.5f] CGColor];
+    activityIndicator.hidesWhenStopped = YES;
+    activityIndicator.frame = self.view.bounds;
+    [self.view addSubview:activityIndicator];
+    [activityIndicator startAnimating];
+}
+- (void) stopAnimating{
+    [activityIndicator stopAnimating];
 }
 
 @end

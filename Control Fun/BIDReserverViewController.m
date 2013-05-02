@@ -117,13 +117,14 @@
     {
         NSLog(@"Reservation: %@",json);
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setObject:@"pending" forKey:@"status_reservation"];
+        [defaults setObject:@"pending" forKey:@"reservationStatus"];
         [defaults setObject:[json objectForKey:@"depart"] forKey:@"positionClient"];
         
         
-        NSLog(@"statut: %@",[defaults objectForKey:@"statut_reservation"]);
+        NSLog(@"Reservation status: %@",[defaults objectForKey:@"reservationStatus"]);
         
         [self dismissModalViewControllerAnimated:YES];
+        
     }else{
         UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Erreur Reservation!"
                                                           message:@"Votre adresse départ n'est pas valide."

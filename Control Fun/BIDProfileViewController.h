@@ -10,5 +10,8 @@
 
 @interface BIDProfileViewController : UIViewController
 - (IBAction)goBackAction:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *nomField;
+@property (weak, nonatomic) IBOutlet UILabel *emailField;
+@property (weak, nonatomic) IBOutlet UILabel *telField;
 
 @end

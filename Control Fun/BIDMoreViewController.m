@@ -33,6 +33,17 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary* user_profile = [defaults objectForKey:@"user_profile"];
+    
+    NSString* fullname = [[NSString alloc] initWithFormat:@"%@ %@",[user_profile objectForKey:@"nom"],[user_profile objectForKey:@"prenom"]];
+    
+    self.nameField.text = fullname;
+    self.emailField.text = [user_profile objectForKey:@"email"];
+    NSString *string = [user_profile objectForKey:@"telephone"];
+    NSString *trimmedString = [string stringByTrimmingCharactersInSet:
+                               [NSCharacterSet whitespaceCharacterSet]];
+    self.phoneField.text = trimmedString;
 }
 
 - (void)didReceiveMemoryWarning
@@ -135,4 +146,10 @@
     [activityIndicator stopAnimating];
 }
 
+- (void)viewDidUnload {
+    [self setNameField:nil];
+    [self setEmailField:nil];
+    [self setPhoneField:nil];
+    [super viewDidUnload];
+}
 @end

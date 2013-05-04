@@ -21,7 +21,7 @@
 - (IBAction)fetchReservation;
 - (IBAction)reserverAction:(id)sender;
 - (IBAction)annulerReservationAction:(id)sender;
-- (IBAction)bringProfileAction:(id)sender;
+- (IBAction)refreshData:(id)sender; 
 - (IBAction)bringConfigAction:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UIButton *boutonReserver;

@@ -5,7 +5,7 @@
 #import "SSKeychain.h"
 #import "BIDSigninViewController.h"
 #import <QuartzCore/QuartzCore.h>
-
+#import "BIDAppDelegate.h"
 
 @interface BIDViewController ()
 
@@ -138,6 +138,9 @@
         BIDHomeViewController* homeView = [[BIDHomeViewController alloc] initWithNibName:@"BIDHomeViewController" bundle:nil];
         UIWindow *window = [[UIApplication sharedApplication] keyWindow];
         window.rootViewController = homeView;
+        
+        BIDAppDelegate *appDelegate = (BIDAppDelegate *)[[UIApplication sharedApplication] delegate];
+        appDelegate.viewController = homeView;
          
         
     }else{

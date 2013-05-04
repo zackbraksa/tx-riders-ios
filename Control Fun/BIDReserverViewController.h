@@ -21,7 +21,7 @@
 - (IBAction)valueChanged:(UIStepper*)sender;
 - (IBAction)textFieldDoneEditing:(id)sender;
 - (IBAction)clickNext:(id)sender;
-
+- (IBAction)backgroundTap:(id)sender;
 
 
 

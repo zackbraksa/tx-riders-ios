@@ -152,6 +152,11 @@
     [self dismissModalViewControllerAnimated:YES];
 }
 
+- (IBAction)backgroundTap:(id)sender {
+    [self.destinationField resignFirstResponder];
+    [self.departField resignFirstResponder];
+}
+
 - (IBAction)valueChanged:(UIStepper*)sender {
     if([sender tag] == 0){
         [self.passagersLabel setText:[[NSString alloc] initWithFormat:@"%0.f",[sender value]]];

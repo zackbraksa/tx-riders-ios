@@ -9,7 +9,6 @@
 #import "BIDHomeViewController.h"
 #import "BIDReserverViewController.h"
 #import "BIDMapPoint.h"
-#import "BIDProfileViewController.h"
 #import "BIDMoreViewController.h"
 #import <QuartzCore/QuartzCore.h>
 
@@ -42,10 +41,21 @@
     [self.worldMap setShowsUserLocation:YES];
     
     
+    //whenever the app enter foreground we need to refresh the current state of the map + reservation
+    //so to do that we subscribe to UIApplicationDidBecomeActiveNotification using the Observer design pattern. 
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(refreshData:)
+                                                 name:UIApplicationDidBecomeActiveNotification
+                                               object:nil];
+    
 }
+
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *status = [defaults objectForKey:@"reservationStatus"];
     
@@ -57,10 +67,11 @@
         self.redTitleLabel.text = @"Réservation acceptée";
         self.blackTitleLabel.text = @"Votre taxi est en route";
         [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
-    }else{
-        //try to find if there is any pending reservations
-        [self fetchReservation];
     }
+    
+    //try to find if there is any pending reservations
+    [self fetchReservation];
+    
     
     /*if([statut isEqualToString:@"pending"]){
         [self.boutonAnnuler setHidden:NO];
@@ -76,8 +87,6 @@
         [self.worldMap setRegion:mapRegion animated: YES];
     }*/
     
-    [super viewWillAppear:animated];
-    
 }
 
 - (IBAction)fetchReservation{
@@ -86,6 +95,7 @@
     
     NSMutableData *data = [[NSMutableData alloc] init];
     self.chauffeursData = data;
+    [self.connection cancel];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *user_id = [defaults objectForKey:@"user_id"];
@@ -111,6 +121,7 @@
         
     NSMutableData *data = [[NSMutableData alloc] init];
     self.chauffeursData = data;
+    [self.connection cancel];
     
     NSURL *url = [NSURL URLWithString:@"http://test.braksa.com/tx/index.php/api/example/chauffeurs/format/json"];
     
@@ -135,6 +146,9 @@
                      options:kNilOptions
                      error:nil];
     
+    
+    NSLog(@"%@",json);
+    
     if([[json objectForKey:@"action"] isEqualToString:@"getReservation"]){
         
         NSLog(@"Reservations fetched from server: %@", [json objectForKey:@"status"]);
@@ -152,6 +166,7 @@
                 self.redTitleLabel.text = @"Vous allez recevoir une notification dans un moment.";
                 
                 NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                [defaults setObject:@"pending" forKey:@"reservationStatus"];
                 [defaults setObject:[[json objectForKey:@"reservation"] objectForKey:@"id"] forKey:@"reservation_id"];
                 
                 NSNumber* latitude = [[json objectForKey:@"reservation"] objectForKey:@"latitude"];
@@ -176,6 +191,7 @@
                 self.redTitleLabel.text = @"Réservation acceptée";
                 
                 NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                [defaults setObject:@"accepted" forKey:@"reservationStatus"];
                 [defaults setObject:[[json objectForKey:@"reservation"] objectForKey:@"id"] forKey:@"reservation_id"];
                 
                 NSNumber* latitude = [[json objectForKey:@"reservation"] objectForKey:@"latitude"];
@@ -205,6 +221,10 @@
                 [self.worldMap removeAnnotation:pinDepart];
             }
             [self.worldMap setRegion:mapRegion animated: YES];
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            [defaults setObject:@"none" forKey:@"reservationStatus"];
+            
+            NSLog(@"No Reservation");
             
         }
         
@@ -254,6 +274,7 @@
         [self.worldMap setRegion:mapRegion animated: YES];
         
     }else{
+        
         NSLog(@"Error canceling reservation. %@", json);
     }
     
@@ -291,7 +312,7 @@
         pinView.image = [UIImage imageNamed:@"icon_taxi-y.gif"];
     }
     else {
-        [self.worldMap.userLocation setTitle:@"I am here"];
+        [self.worldMap.userLocation setTitle:@"Vous êtes ici"];
     }
     
     
@@ -315,14 +336,13 @@
 
 
 
-- (IBAction)bringProfileAction:(id)sender {
-    BIDProfileViewController *profileView = [[BIDProfileViewController alloc] initWithNibName:@"BIDProfileViewController" bundle:nil];
-    [self presentModalViewController:profileView animated:YES];
-}
-
 - (IBAction)bringConfigAction:(id)sender {
     BIDMoreViewController *configView = [[BIDMoreViewController alloc] initWithNibName:@"BIDMoreViewController" bundle:nil];
     [self presentModalViewController:configView animated:YES];
+}
+
+- (IBAction)refreshData:(id)sender {
+    [self fetchReservation];
 }
 
 //prompt alertview when user want to cancel action

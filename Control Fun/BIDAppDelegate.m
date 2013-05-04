@@ -29,14 +29,8 @@
     NSLog(@"LOGIN user_id : %@",user_id);
     
     if(user_id == NULL){
-        
         self.viewController = [[BIDViewController alloc] initWithNibName:@"BIDViewController" bundle:nil];
-        /*BIDViewController *fistView = [[BIDViewController alloc] initWithNibName:@"BIDViewController" bundle:nil];
-        self.viewController = [[UINavigationController alloc] initWithRootViewController:fistView];
-        ((UINavigationController*)self.viewController).navigationBar.tintColor = [UIColor blackColor];*/
-        
     }else{
-        //self.viewController = [[BIDTabBarViewController alloc] initWithNibName:@"BIDTabBarViewController" bundle:nil];
         self.viewController = [[BIDHomeViewController alloc] initWithNibName:@"BIDHomeViewController" bundle:nil];
     }
     
@@ -95,6 +89,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

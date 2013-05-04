@@ -13,6 +13,9 @@
 }
 
 
+@property (weak, nonatomic) IBOutlet UILabel *nameField;
+@property (weak, nonatomic) IBOutlet UILabel *emailField;
+@property (weak, nonatomic) IBOutlet UILabel *phoneField;
 @property (retain, nonatomic) NSURLConnection *connection;
 @property (retain, nonatomic) NSMutableData *receivedData;
 

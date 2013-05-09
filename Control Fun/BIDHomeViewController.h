@@ -14,6 +14,7 @@
 @interface BIDHomeViewController : UIViewController <CLLocationManagerDelegate,MKMapViewDelegate,UITextFieldDelegate,UIAlertViewDelegate>{
     CLLocationManager *locationManager;
     UIActivityIndicatorView *activityIndicator;
+    NSMutableArray* chauffeurs;
     BIDMapPoint* pinDepart;
 }
 

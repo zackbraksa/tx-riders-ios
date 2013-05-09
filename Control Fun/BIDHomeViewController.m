@@ -40,6 +40,8 @@
     [locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
     [self.worldMap setShowsUserLocation:YES];
     
+    chauffeurs = [[NSMutableArray alloc] init];
+
     
     //whenever the app enter foreground we need to refresh the current state of the map + reservation
     //so to do that we subscribe to UIApplicationDidBecomeActiveNotification using the Observer design pattern. 
@@ -64,6 +66,7 @@
     //if the reservation was accepted by a taxi driver then show a slightly different view
     if(status != NULL && [status isEqualToString:@"accepted"]){
         [self.boutonAnnuler setHidden:YES];
+        [self.boutonReserver setHidden:YES];
         self.redTitleLabel.text = @"Réservation acceptée";
         self.blackTitleLabel.text = @"Votre taxi est en route";
         [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
@@ -238,6 +241,9 @@
         
         if([[json objectForKey:@"status"] isEqualToString:@"done"]){
             
+            [self.worldMap removeAnnotations:chauffeurs];
+            [chauffeurs removeAllObjects];
+            
             for(int i=0;i<[[json objectForKey:@"chauffeurs"] count]; i++){
                 
                 CGFloat latDelta = [[[[json objectForKey:@"chauffeurs"] objectAtIndex:i] objectForKey:@"latitude"] floatValue];
@@ -246,7 +252,7 @@
                 CLLocationCoordinate2D newCoord = { latDelta, longDelta };
                 
                 BIDMapPoint *mp = [[BIDMapPoint alloc] initWithCoordinate:newCoord title:[NSString stringWithFormat:@"Taxi"] subTitle:@"Adresse de départ"];
-                
+                [chauffeurs addObject:mp];
                 [self.worldMap addAnnotation:mp];
             }
             

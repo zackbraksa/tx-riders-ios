@@ -53,14 +53,23 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)apnToken
     NSString* apnString = [[NSString alloc] initWithData:apnToken encoding:NSUTF8StringEncoding];
     NSString* old_apn = [apnString stringByReplacingOccurrencesOfString:@" " withString:@""];
     NSString *apn = [old_apn substringWithRange:NSMakeRange(1, [old_apn length]-1)];
-    //NSLog(@"My token is: %@", apn);
+    NSLog(@"My token is: %@", apn);
     [defaults setObject:apn forKey:@"apnToken"];
 }
 
 - (void)application:(UIApplication *)application
 didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    
+    //NSLog(@"userInfo %@",userInfo);
+    //NSLog(@"aps %@",[userInfo objectForKey:@"aps"]);
+    NSLog(@"alert %@",[[userInfo objectForKey:@"aps"] objectForKey:@"alert"]);
+
     NSLog(@"Got a new notification");
-    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Confirmation" message:@"Votre taxi est en route!" delegate:self cancelButtonTitle:@"OK!" otherButtonTitles:nil, nil];
+    
+    NSString* msg = [[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
+    
+    
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Confirmation" message:msg delegate:self cancelButtonTitle:@"OK!" otherButtonTitles:nil, nil];
     [message show];
     notif = true;
     

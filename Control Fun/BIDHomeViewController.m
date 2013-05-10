@@ -39,6 +39,7 @@
     [locationManager setDistanceFilter:kCLDistanceFilterNone];
     [locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
     [self.worldMap setShowsUserLocation:YES];
+    [locationManager startUpdatingLocation];
     
     chauffeurs = [[NSMutableArray alloc] init];
 
@@ -51,6 +52,20 @@
                                                  name:UIApplicationDidBecomeActiveNotification
                                                object:nil];
     
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
+    
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString* latitude = [[NSString alloc] initWithFormat:@"%f",newLocation.coordinate.latitude];
+    NSString* longitude = [[NSString alloc] initWithFormat:@"%f",newLocation.coordinate.longitude];
+    NSMutableArray* location = [[NSMutableArray alloc] init];
+    [location addObject:latitude];
+    [location addObject:longitude];
+    [defaults setObject:location forKey:@"currentLocation"];
+    NSLog(@"Position UPDATED %f %f",newLocation.coordinate.latitude, newLocation.coordinate.longitude);
+
 }
 
 

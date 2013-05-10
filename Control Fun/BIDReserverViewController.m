@@ -8,7 +8,7 @@
 
 #import "BIDReserverViewController.h"
 #import <QuartzCore/QuartzCore.h>
-
+#import <AddressBook/AddressBook.h>
 
 @interface BIDReserverViewController ()
 
@@ -30,6 +30,56 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 }
+
+- (void)viewWillAppear:(BOOL)animated{
+    
+    [super viewWillAppear:YES];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    NSArray* location = [defaults objectForKey:@"currentLocation"];
+    
+    CLLocation *newLocation = [[CLLocation alloc]initWithLatitude:[[location objectAtIndex:0] floatValue]
+                                                        longitude:[[location objectAtIndex:1] floatValue]];
+    [geocoder reverseGeocodeLocation:newLocation
+                   completionHandler:^(NSArray *placemarks, NSError *error) {
+                       
+                       if (error) {
+                           NSLog(@"Geocode failed with error: %@", error);
+                           return;
+                       }
+                       
+                       if (placemarks && placemarks.count > 0)
+                       {
+                           CLPlacemark *placemark = placemarks[0];
+                           
+                           NSDictionary *addressDictionary =
+                           placemark.addressDictionary;
+                           
+                           NSLog(@"%@ ", addressDictionary);
+                           NSString *address = [addressDictionary
+                                                objectForKey:(NSString *)kABPersonAddressStreetKey];
+                           NSString *city = [addressDictionary
+                                             objectForKey:(NSString *)kABPersonAddressCityKey];
+                           NSString *state = [addressDictionary
+                                              objectForKey:(NSString *)kABPersonAddressStateKey];
+                           NSString *zip = [addressDictionary
+                                            objectForKey:(NSString *)kABPersonAddressZIPKey];
+                           
+                           NSArray* array = [addressDictionary objectForKey:@"FormattedAddressLines"];
+                           NSString* adr =  [array componentsJoinedByString: @", "];
+
+                           self.departField.text = [[NSString alloc] initWithFormat:@"%@",adr];
+                           
+                           NSLog(@"%@ %@ %@ %@", address,city, state, zip);
+                       }
+                   }
+     ];
+}
+
+     
 
 - (IBAction)clickNext:(id)sender{
     

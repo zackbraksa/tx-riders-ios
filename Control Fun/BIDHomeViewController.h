@@ -33,6 +33,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *redTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *blackTitleLabel;
 
+@property (retain, nonatomic) CLLocation *currentLocation;
+
+
 
 
 @end

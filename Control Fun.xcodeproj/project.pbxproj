@@ -43,6 +43,7 @@
 		92BEFB5D1732666A003D3F2C /* settings_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 92BEFB5B1732666A003D3F2C /* settings_icon.png */; };
 		92BEFB5E1732666A003D3F2C /* user_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 92BEFB5C1732666A003D3F2C /* user_icon.png */; };
 		92BEFB6017326A42003D3F2C /* refresh_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 92BEFB5F17326A42003D3F2C /* refresh_icon.png */; };
+		92D1DD6A173D5A5A00A948AC /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92D1DD69173D5A5A00A948AC /* AddressBook.framework */; };
 		92DF090B16E8DEC00088CD3E /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 92DF090A16E8DEBF0088CD3E /* background.png */; };
 		92DF090E16E8E5720088CD3E /* background2.png in Resources */ = {isa = PBXBuildFile; fileRef = 92DF090D16E8E5720088CD3E /* background2.png */; };
 		92DF091516E8F3770088CD3E /* BIDReserverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92DF091316E8F3770088CD3E /* BIDReserverViewController.m */; };
@@ -107,6 +108,7 @@
 		92BEFB5B1732666A003D3F2C /* settings_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings_icon.png; sourceTree = "<group>"; };
 		92BEFB5C1732666A003D3F2C /* user_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user_icon.png; sourceTree = "<group>"; };
 		92BEFB5F17326A42003D3F2C /* refresh_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = refresh_icon.png; sourceTree = "<group>"; };
+		92D1DD69173D5A5A00A948AC /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		92DF090A16E8DEBF0088CD3E /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		92DF090D16E8E5720088CD3E /* background2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = background2.png; path = "Control Fun/background2.png"; sourceTree = "<group>"; };
 		92DF091216E8F3770088CD3E /* BIDReserverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BIDReserverViewController.h; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92D1DD6A173D5A5A00A948AC /* AddressBook.framework in Frameworks */,
 				92849C8516FC0C1E00E97233 /* SystemConfiguration.framework in Frameworks */,
 				92849C8316FC0C1400E97233 /* StoreKit.framework in Frameworks */,
 				92E8815516E4E94D008A8436 /* Security.framework in Frameworks */,
@@ -154,6 +157,7 @@
 		23C5C6A615D3924400803F1A = {
 			isa = PBXGroup;
 			children = (
+				92D1DD69173D5A5A00A948AC /* AddressBook.framework */,
 				92849C8A16FC114000E97233 /* Accounts.framework */,
 				92849C8816FC113A00E97233 /* Social.framework */,
 				92849C8616FC113200E97233 /* AdSupport.framework */,
